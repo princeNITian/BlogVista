@@ -14,10 +14,13 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("https://blog-vista-api.vercel.app/auth/register", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://blog-vista-api.vercel.app/auth/register",
+        {
+          username,
+          password,
+        }
+      );
       console.log(response.data);
       navigate("/login");
     } catch (error) {

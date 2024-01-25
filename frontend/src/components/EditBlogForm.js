@@ -20,7 +20,7 @@ const EditBlogForm = () => {
     // Fetch the blog data and set the state when component mounts
     console.log({ blogId });
     axios
-      .get(`http://localhost:5000/blogs/${blogId}`, {
+      .get(`https://blog-vista-api.vercel.app/blogs/${blogId}`, {
         headers: {
           Authorization: localStorage.getItem("_token"),
         },
@@ -42,7 +42,7 @@ const EditBlogForm = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/blogs/edit/${blogId}`,
+        `https://blog-vista-api.vercel.app/blogs/edit/${blogId}`,
         {
           title,
           content,

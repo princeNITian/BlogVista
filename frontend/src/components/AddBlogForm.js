@@ -19,7 +19,7 @@ const AddBlogForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/blogs/add",
+        "https://blog-vista-api.vercel.app/blogs/add",
         {
           title,
           content,

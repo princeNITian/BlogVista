@@ -64,7 +64,7 @@ const BlogList = () => {
 
   const handleDelete = (blogId) => {
     axios
-      .delete(`http://localhost:5000/blogs/delete/${blogId}`, {
+      .delete(`https://blog-vista-api.vercel.app/blogs/delete/${blogId}`, {
         headers: {
           Authorization: localStorage.getItem("_token"),
         },
