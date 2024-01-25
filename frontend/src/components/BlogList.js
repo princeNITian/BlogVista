@@ -50,7 +50,7 @@ const BlogList = () => {
     });
 
     axios
-      .get(`http://localhost:5000/blogs/filter?${queryParams}`, {
+      .get(`https://blog-vista-api.vercel.app/blogs/filter?${queryParams}`, {
         headers: {
           Authorization: localStorage.getItem("_token"),
         },
