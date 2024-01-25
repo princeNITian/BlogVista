@@ -25,7 +25,7 @@ mongoose
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://blogvista.vercel.app"]
+    origin: ["http://localhost:3000","https://blog-vista-rho.vercel.app/"]
   })
 );
 // Routes
