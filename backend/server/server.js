@@ -25,16 +25,16 @@ mongoose
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000","https://blog-vista-rho.vercel.app/"]
+    origin: ["http://localhost:3000", "https://blog-vista-rho.vercel.app"],
   })
 );
 // Routes
 app.use("/auth", authRoutes);
 app.use("/blogs", blogRoutes);
 
-app.get("/", (req,res) => {
-  res.send("<h1>BlogVista API Working..</h1>")
-})
+app.get("/", (req, res) => {
+  res.send("<h1>BlogVista API Working..</h1>");
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
