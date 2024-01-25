@@ -191,7 +191,7 @@ const Home = () => {
             {/* Replace the URL with the actual URL of your video */}
             <iframe
               className="card-img-top embed-responsive-item"
-              src="https://www.youtube.com/embed/SCuiMqVa2GA"
+              src="https://www.youtube.com/embed/TDXECOB74DQ"
               title="How to Use BlogVista"
               allowFullScreen
               style={{ height: "400px" }}
