@@ -18,7 +18,7 @@ const ForgotPasswordForm = () => {
         { email }
       );
       setMessage(response.data.message);
-      setTimeout(() => navigate("/"), 1500);
+      setTimeout(() => navigate("/"), 2000);
     } catch (error) {
       console.error(error.response.data.message);
       setMessage(error.response.data.message);

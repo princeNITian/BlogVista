@@ -24,7 +24,7 @@ const RegisterForm = () => {
       );
       console.log(response.data);
       setMessage(response.data.message);
-      navigate("/login");
+      setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
       console.error(error.response.data.message);
       setMessage(error.response.data.message);
@@ -76,7 +76,7 @@ const RegisterForm = () => {
             <button type="submit" className="btn btn-outline-primary">
               Register
             </button>
-            {message && <p className="mt-3">{message}</p>}
+            {message && <p className="mt-3 lead">{message}</p>}
           </form>
         </div>
         <div className="card-footer text-muted text-center bg-light">

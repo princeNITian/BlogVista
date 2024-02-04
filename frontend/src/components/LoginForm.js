@@ -83,7 +83,7 @@ const LoginForm = () => {
             </button>
             {message && (
               <p
-                className="mt-3"
+                className="mt-3 lead"
                 dangerouslySetInnerHTML={{ __html: message }}
               ></p>
             )}
