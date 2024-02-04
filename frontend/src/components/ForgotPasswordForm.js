@@ -1,14 +1,14 @@
 // frontend/src/components/ForgotPasswordForm.js
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBlog, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-
+  const navigate = useNavigate();
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
@@ -18,6 +18,7 @@ const ForgotPasswordForm = () => {
         { email }
       );
       setMessage(response.data.message);
+      setTimeout(() => navigate("/"), 1500);
     } catch (error) {
       console.error(error.response.data.message);
       setMessage(error.response.data.message);
@@ -55,7 +56,7 @@ const ForgotPasswordForm = () => {
             <button type="submit" className="btn btn-outline-primary">
               Send Reset Link
             </button>
-            {message && <p className="mt-3">{message}</p>}
+            {message && <p className="mt-3 lead">{message}</p>}
           </form>
         </div>
         <div className="card-footer text-muted text-center bg-light">
