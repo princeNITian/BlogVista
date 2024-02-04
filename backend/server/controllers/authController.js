@@ -16,6 +16,10 @@ exports.register = async (req, res) => {
     if (user && !user.isVerified) {
       // delete the user
       await User.deleteOne({ username });
+    } else if (user && user.isVerified) {
+      res.status(201).json({
+        message: "User already registered. Please navigate to Login Page.",
+      });
     }
 
     // Hash the password
