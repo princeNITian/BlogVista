@@ -9,11 +9,20 @@ exports.register = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    // If Email is not verified re-send verification mail.
+    // Find the user by username
+    let user = await User.findOne({ username });
+
+    if (user && !user.isVerified) {
+      // delete the user
+      await User.deleteOne({ username });
+    }
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user
-    const user = new User({
+    user = new User({
       username,
       password: hashedPassword,
     });
@@ -21,7 +30,88 @@ exports.register = async (req, res) => {
     // Save the user to the database
     await user.save();
 
-    res.status(201).json({ message: "User registered successfully" });
+    // Send verification email
+    const verificationLink = `https://blog-vista-api.vercel.app/auth/verify?userId=${user._id}`;
+    const mailOptions = {
+      from: `BlogVista <${process.env.EMAIL}>`,
+      to: username,
+      subject: "Email Verification",
+      html: `
+    <html lang="en">
+    <head>
+      <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f5f5f5;
+          color: #333;
+          margin: 0;
+          padding: 0;
+        }
+
+        .email-container {
+          max-width: 600px;
+          margin: 20px auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+          color: #007bff;
+        }
+
+        p {
+          line-height: 1.6;
+        }
+
+        a {
+          color: #007bff;
+          text-decoration: none;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="email-container">
+        <h1>Welcome to BlogVista!</h1>
+        <p>
+          Thank you for signing up. To complete your registration, please click on the following link to verify your email:
+          <br>
+          <a href="${verificationLink}" target="_blank">${verificationLink}</a>
+        </p>
+        <p>If you have any questions, feel free to contact us.</p>
+        <p>Best regards,<br>BlogVista Team</p>
+      </div>
+    </body>
+    </html>
+  `,
+    };
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL, // replace with your email
+        pass: process.env.EMAIL_PASS, // replace with your email password
+      },
+    });
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res
+          .status(500)
+          .json({ error: "Error sending verification email" });
+      }
+      res.status(200).json({
+        message:
+          "Registration successful. Please check your email for verification.",
+      });
+    });
+
+    // res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -37,6 +127,12 @@ exports.login = async (req, res) => {
 
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    if (!user.isVerified) {
+      return res
+        .status(401)
+        .json({ message: "Email verification is not completed." });
     }
 
     // Compare the provided password with the stored hashed password
@@ -189,4 +285,20 @@ exports.resetPassword = async (req, res) => {
   await user.save();
 
   res.json({ message: "Password reset successful" });
+};
+
+exports.verifyAccount = async (req, res) => {
+  try {
+    const { userId } = req.query;
+
+    // Update user verification status
+    await User.updateOne({ _id: userId }, { $set: { isVerified: true } });
+
+    // Use client-side JavaScript to handle the delay and redirection
+    res.send(
+      '<p>Email verified successfully. You can login now. Redirecting...</p><script>setTimeout(() => { window.location.href = "https://blog-vista-rho.vercel.app/"; }, 1000);</script>'
+    );
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
 };

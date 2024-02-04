@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -22,9 +23,11 @@ const RegisterForm = () => {
         }
       );
       console.log(response.data);
+      setMessage(response.data.message);
       navigate("/login");
     } catch (error) {
       console.error(error.response.data.message);
+      setMessage(error.response.data.message);
     }
   };
 
@@ -71,6 +74,7 @@ const RegisterForm = () => {
             <button type="submit" className="btn btn-outline-primary">
               Register
             </button>
+            {message && <p className="mt-3">{message}</p>}
           </form>
         </div>
         <div className="card-footer text-muted text-center bg-light">

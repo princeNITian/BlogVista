@@ -52,7 +52,7 @@ const ForgotPasswordForm = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-outline-primary">
               Send Reset Link
             </button>
             {message && <p className="mt-3">{message}</p>}

@@ -8,6 +8,8 @@ import { faBlog, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -21,11 +23,12 @@ const LoginForm = () => {
           password,
         }
       );
-      console.log(response.data);
+      setMessage(response.data.message);
       localStorage.setItem("_token", response.data.token);
       navigate("/blogs");
     } catch (error) {
       console.error(error.response.data.message);
+      setMessage(error.response.data.message);
     }
   };
 
@@ -77,6 +80,7 @@ const LoginForm = () => {
             <button type="submit" className="btn btn-outline-primary">
               Login
             </button>
+            {message && <p className="mt-3">{message}</p>}
           </form>
         </div>
         <div className="card-footer text-muted text-center bg-light">

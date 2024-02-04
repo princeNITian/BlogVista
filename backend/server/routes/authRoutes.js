@@ -16,4 +16,6 @@ router.get("/reset-password/:token", authController.verifyToken);
 // Step 3: Update Password
 router.post("/reset-password", authController.resetPassword);
 
+router.get("/verify", authController.verifyAccount);
+
 module.exports = router;
