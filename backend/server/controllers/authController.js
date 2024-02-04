@@ -131,7 +131,7 @@ exports.login = async (req, res) => {
 
     if (!user.isVerified) {
       return res.status(401).json({
-        message: `<p>Email verification is pending. Please check your Inbox! <strong><a href="https://blog-vista-api.vercel.app/auth/resend?userId=${user._id}">Resend Mail</a></strong></p>`,
+        message: `Email verification is pending. Please check your Inbox! <strong><a href="https://blog-vista-api.vercel.app/auth/resend?userId=${user._id}">Resend Mail</a></strong>`,
       });
     }
 

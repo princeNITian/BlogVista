@@ -80,7 +80,12 @@ const LoginForm = () => {
             <button type="submit" className="btn btn-outline-primary">
               Login
             </button>
-            {message && <p className="mt-3">{message}</p>}
+            {message && (
+              <p
+                className="mt-3"
+                dangerouslySetInnerHTML={{ __html: message }}
+              ></p>
+            )}
           </form>
         </div>
         <div className="card-footer text-muted text-center bg-light">
