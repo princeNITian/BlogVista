@@ -83,7 +83,7 @@ exports.forgotPassword = async (req, res) => {
     });
 
     const mailOptions = {
-      from: "BlogVista", // replace with your email
+      from: `BlogVista <${process.env.EMAIL}>`, // replace with your email
       to: user.username,
       subject: "Password Reset Request",
       html: `
