@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBlog, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBlog, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -80,8 +80,12 @@ const LoginForm = () => {
         </div>
         <div className="card-footer text-muted text-center bg-light">
           <Link to="/register">
-            <FontAwesomeIcon className="mx-1" icon={faUser} />
+            <FontAwesomeIcon className="mx-2" icon={faUser} />
             Register
+          </Link>
+          <Link to="/forgot-password">
+            <FontAwesomeIcon className="mx-2" icon={faLock} />
+            Forgot Password
           </Link>
         </div>
       </div>

@@ -10,6 +10,8 @@ import LoginForm from "./components/LoginForm"; // Import the login component
 import RegisterForm from "./components/RegisterForm"; // Import the registration component
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./components/Home";
+import ForgotPasswordForm from "./components/ForgotPasswordForm";
+import ResetPasswordForm from "./components/ResetPasswordForm";
 
 const App = () => {
   return (
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
+        <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
         <Route
           path="/blogs/*"
           element={
