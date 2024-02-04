@@ -130,9 +130,9 @@ exports.login = async (req, res) => {
     }
 
     if (!user.isVerified) {
-      return res
-        .status(401)
-        .json({ message: "Email verification is not completed." });
+      return res.status(401).json({
+        message: `<p>Email verification is pending. Please check your Inbox! <strong><a href="https://blog-vista-api.vercel.app/auth/resend?userId=${user._id}">Resend Mail</a></strong></p>`,
+      });
     }
 
     // Compare the provided password with the stored hashed password
@@ -152,6 +152,89 @@ exports.login = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
+};
+
+exports.resendMail = async (req, res) => {
+  // Send verification email
+  const userId = req.query.userId;
+  const verificationLink = `https://blog-vista-api.vercel.app/auth/verify?userId=${userId}`;
+  const mailOptions = {
+    from: `BlogVista <${process.env.EMAIL}>`,
+    to: username,
+    subject: "Email Verification",
+    html: `
+    <html lang="en">
+    <head>
+      <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f5f5f5;
+          color: #333;
+          margin: 0;
+          padding: 0;
+        }
+
+        .email-container {
+          max-width: 600px;
+          margin: 20px auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+          color: #007bff;
+        }
+
+        p {
+          line-height: 1.6;
+        }
+
+        a {
+          color: #007bff;
+          text-decoration: none;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="email-container">
+        <h1>Welcome to BlogVista!</h1>
+        <p>
+          Thank you for signing up. To complete your registration, please click on the following link to verify your email:
+          <br>
+          <a href="${verificationLink}" target="_blank">${verificationLink}</a>
+        </p>
+        <p>If you have any questions, feel free to contact us.</p>
+        <p>Best regards,<br>BlogVista Team</p>
+      </div>
+    </body>
+    </html>
+  `,
+  };
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.EMAIL, // replace with your email
+      pass: process.env.EMAIL_PASS, // replace with your email password
+    },
+  });
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res
+        .status(500)
+        .json({ error: "Error sending verification email" });
+    }
+    res.send(
+      `<p>Email resent successfully. Please check your email for verification. Redirecting to Homepage..</p><script>setTimeout(() => { window.location.href = "https://blog-vista-rho.vercel.app/"; } ,1000)</script>`
+    );
+  });
 };
 
 exports.forgotPassword = async (req, res) => {
