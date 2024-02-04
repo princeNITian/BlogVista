@@ -23,11 +23,17 @@ mongoose
 
 // Middleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "https://blog-vista-rho.vercel.app"],
-  })
-);
+// Custom CORS configuration with additional headers
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://blog-vista-rho.vercel.app"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true, // Enable credentials (e.g., cookies, authorization headers)
+  optionsSuccessStatus: 204, // Set the preflight response status to 204
+  allowedHeaders: "Content-Type, Authorization", // Define the allowed headers
+};
+
+app.use(cors(corsOptions));
+
 // Routes
 app.use("/auth", authRoutes);
 app.use("/blogs", blogRoutes);
