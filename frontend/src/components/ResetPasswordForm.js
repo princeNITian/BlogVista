@@ -60,6 +60,7 @@ const ResetPasswordForm = () => {
                   type="password"
                   className="form-control"
                   id="password"
+                  placeholder="Please enter your new password here.."
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

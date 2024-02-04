@@ -73,6 +73,7 @@ const LoginForm = () => {
                 className="form-control"
                 id="password"
                 value={password}
+                placeholder="Please enter your password here.."
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />

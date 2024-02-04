@@ -52,6 +52,7 @@ const RegisterForm = () => {
               <input
                 type="text"
                 className="form-control"
+                placeholder="Please enter a working email.."
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -66,6 +67,7 @@ const RegisterForm = () => {
                 type="password"
                 className="form-control"
                 id="password"
+                placeholder="Please enter your password here.."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
