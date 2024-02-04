@@ -55,6 +55,7 @@ const LoginForm = () => {
                 type="text"
                 className="form-control"
                 id="username"
+                placeholder="Please enter a working email.."
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required

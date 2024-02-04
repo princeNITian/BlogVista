@@ -144,11 +144,11 @@ exports.forgotPassword = async (req, res) => {
         res.status(500).json({ message: "Error sending email" });
       } else {
         console.log("Email sent: " + info.response);
-        res.json({ message: "Reset token sent to your email" });
+        res.json({ message: "Reset Link sent to your email." });
       }
     });
   } else {
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: "User not found." });
   }
 };
 
