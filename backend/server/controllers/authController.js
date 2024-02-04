@@ -157,6 +157,7 @@ exports.login = async (req, res) => {
 exports.resendMail = async (req, res) => {
   // Send verification email
   const userId = req.query.userId;
+  const { username } = await User.findById({ _id: userId });
   const verificationLink = `https://blog-vista-api.vercel.app/auth/verify?userId=${userId}`;
   const mailOptions = {
     from: `BlogVista <${process.env.EMAIL}>`,
